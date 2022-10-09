@@ -8,7 +8,7 @@ namespace Itemis.SalesTaxes.Abstraction.TaxesChecker
     /// the tax and the element for which the tax is to be calculated.
     /// </summary>
     /// <typeparam name="T">The type of element for which you want to calculate the tax</typeparam>
-    class AbstractTaxesChecker<T>
+    public class AbstractTaxesChecker<T>
     {
         /// <summary>
         /// Concrete tax check implementation.
