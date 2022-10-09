@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Itemis.SalesTaxes.Abstraction\Itemis.SalesTaxes.Abstraction.csproj" />
+  </ItemGroup>
+
 </Project>
