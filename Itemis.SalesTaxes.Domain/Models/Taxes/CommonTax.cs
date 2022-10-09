@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Itemis.SalesTaxes.Domain.Models.Taxes
+﻿namespace Itemis.SalesTaxes.Domain.Models.Taxes
 {
     /// <summary>
     /// Common tax for some region
