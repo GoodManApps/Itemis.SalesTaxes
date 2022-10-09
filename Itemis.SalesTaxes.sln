@@ -5,6 +5,10 @@ VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Itemis.SalesTaxes", "Itemis.SalesTaxes\Itemis.SalesTaxes.csproj", "{A67E8CF1-DAE9-405B-95F6-B5AB64B719C3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{21AF9BE5-FBAE-41DE-A5D5-844F8BCD90AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Itemis.SalesTaxes.Domain", "Itemis.SalesTaxes.Domain\Itemis.SalesTaxes.Domain.csproj", "{DEE9FFE1-4393-4AD0-B38A-AB651699B27B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{A67E8CF1-DAE9-405B-95F6-B5AB64B719C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A67E8CF1-DAE9-405B-95F6-B5AB64B719C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A67E8CF1-DAE9-405B-95F6-B5AB64B719C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEE9FFE1-4393-4AD0-B38A-AB651699B27B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEE9FFE1-4393-4AD0-B38A-AB651699B27B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEE9FFE1-4393-4AD0-B38A-AB651699B27B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEE9FFE1-4393-4AD0-B38A-AB651699B27B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DEE9FFE1-4393-4AD0-B38A-AB651699B27B} = {21AF9BE5-FBAE-41DE-A5D5-844F8BCD90AB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A75C0D24-C969-4D0D-9275-3501A311C53D}
