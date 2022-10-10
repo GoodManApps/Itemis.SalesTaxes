@@ -1,0 +1,14 @@
+{
+  "OutputParagraphs": [
+    "Coding challenge for Itemis.",
+    "Problem 1: SALES TAXES",
+    "Vyacheslav Shengur's solution. Hope, you'll like it.",
+    "",
+    "Start entering the contents of the cart, where each line is a separate item in the order.",
+    "Template for the line - {quantity of products} {product name} at {cost of one unit of goods or services in format X.XX}.",
+    "Filling example: 1 book at 12.49",
+    "After filling all the items in the basket, to finish, press Enter twice to add an empty line.",
+    "Then, a check will be displayed with the calculation of all necessary taxes and the total amount.",
+    ""
+  ]
+}
