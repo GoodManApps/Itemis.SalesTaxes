@@ -1,8 +1,12 @@
-﻿using Itemis.SalesTaxes.Domain.Models;
-using Itemis.SalesTaxes.Processing;
-using Itemis.SalesTaxes.Settings;
+﻿using Itemis.SalesTaxes.Abstraction.Processing;
+using Itemis.SalesTaxes.Abstraction.Settings;
+using Itemis.SalesTaxes.Modules;
 
 using Microsoft.Extensions.Configuration;
+
+using Ninject;
+
+using System.Reflection;
 
 // Build a config object, using env vars and JSON providers.
 IConfiguration config = new ConfigurationBuilder()
@@ -11,40 +15,55 @@ IConfiguration config = new ConfigurationBuilder()
     .AddEnvironmentVariables()
     .Build();
 
-// Get values from the config given their key and their target type.
-ProductTaxSettings settings = config
-    .GetRequiredSection(nameof(ProductTaxSettings))
-    .Get<ProductTaxSettings>();
+// Create kernek instance and
+// load bindings settings for products
+// from central DI assembly in this kernel
+var kernel = new StandardKernel();
+var diAssembly = Assembly.GetAssembly(typeof(ProductTaxBindings));
+kernel.Load(diAssembly);
 
-if (settings == null)
+// Get instance of IProductTaxSettings with needed type
+var productTaxSettings = kernel.Get<IProductTaxSettings>();
+var settingsType = productTaxSettings.GetType();
+
+// Get settings from configuration provider
+productTaxSettings = (IProductTaxSettings)config
+    .GetRequiredSection(settingsType.Name.ToString())
+    .Get(settingsType);
+
+// if there is no settings, we can't start app
+if (productTaxSettings == null)
 {
     Console.WriteLine("Settings weren't loaded correctly. The results may be unexpected.");
-    Console.WriteLine("You are seeing default text. It's better to stop app and find a problem.");
+    Console.WriteLine("The app is shuting down. Please, try to find a problem."); 
+    Console.ReadLine();
+    return;
 }
-else
+
+Console.WriteLine("Settings loaded correctly.");
+var paragraphs = config
+    .GetSection("OutputParagraphs")
+    .Get<IEnumerable<string>>();
+
+foreach (var paragraph in paragraphs)
 {
-    Console.WriteLine("Settings loaded correctly.");
-
-    var paragraphs = config
-        .GetSection("OutputParagraphs")
-        .Get<List<string>>();
-
-    foreach (var paragraph in paragraphs)
-    {
-        Console.WriteLine(paragraph);
-    }
+    Console.WriteLine(paragraph);
 }
 
 // We are waiting to procecess products in this invoice
-var invoice = new Invoice<Product>();
-var exitCode = string.Empty;
+var settingsParam = new Ninject.Parameters
+    .ConstructorArgument(nameof(productTaxSettings), productTaxSettings);
+var invoice = kernel.Get<IInvoice>(settingsParam);
+string? exitCode;
 
+// Repeat basket processing in loop while user won't stop
 do
 {
     var inputs = new List<string>();
-    string? input = string.Empty;
+    string? input;
     Console.WriteLine("Basket:");
 
+    // Fill input data with each row
     do
     {
         input = Console.ReadLine();

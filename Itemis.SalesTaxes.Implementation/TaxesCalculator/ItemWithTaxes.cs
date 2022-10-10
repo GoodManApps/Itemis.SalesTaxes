@@ -1,4 +1,5 @@
-﻿using Itemis.SalesTaxes.Domain.Interfaces;
+﻿using Itemis.SalesTaxes.Abstraction.Processing;
+using Itemis.SalesTaxes.Domain.Interfaces;
 using Itemis.SalesTaxes.Domain.Models.Taxes;
 
 namespace Itemis.SalesTaxes.Implementation.TaxesCalculator
@@ -6,22 +7,28 @@ namespace Itemis.SalesTaxes.Implementation.TaxesCalculator
     /// <summary>
     /// Item with list of needed taxes for it
     /// </summary>
-    public class ItemWithTaxes
+    public class ItemWithTaxes: ITaxeable
     {
         /// <summary>
         /// An element is a product or service.
         /// </summary>
-        public readonly IItem Item;
+        private readonly IItem _item;
 
         /// <summary>
         /// Quantity to be purchased
         /// </summary>
-        public readonly int Count;
+        private readonly int _count;
 
         /// <summary>
         /// List of required taxes
         /// </summary>
         private IEnumerable<BaseTax> _taxes;
+
+        // </inheritdoc>
+        public int Count { get => _count; }
+
+        // </inheritdoc>
+        public IItem Item { get => _item; }
 
         /// <summary>
         /// Ctor with params
@@ -32,8 +39,8 @@ namespace Itemis.SalesTaxes.Implementation.TaxesCalculator
         /// <exception cref="ArgumentNullException"></exception>
         public ItemWithTaxes(IItem item, int? count, IEnumerable<BaseTax>? taxes = null)
         {
-            Item = item ?? throw new ArgumentNullException(nameof(item));
-            Count = count ?? throw new ArgumentNullException(nameof(count));
+            _item = item ?? throw new ArgumentNullException(nameof(item));
+            _count = count ?? throw new ArgumentNullException(nameof(count));
             _taxes = taxes ?? new List<BaseTax>();
         }
 
@@ -46,10 +53,7 @@ namespace Itemis.SalesTaxes.Implementation.TaxesCalculator
             _taxes = taxes;
         }
 
-        /// <summary>
-        /// Total tax info about this item
-        /// </summary>
-        /// <returns>Calculate total tax info including count of good or service</returns>
+        // </inheritdoc>
         public float GetTaxAmount()
         {
             var totalTaxSize = 0.0f;
@@ -64,10 +68,7 @@ namespace Itemis.SalesTaxes.Implementation.TaxesCalculator
                     MidpointRounding.AwayFromZero) / 20, 1);
         }
 
-        /// <summary>
-        /// Total price of this item
-        /// </summary>
-        /// <returns>Calculate total cost of this good or service including count of it</returns>
+        // </inheritdoc>
         public float GetTotalAmount()
         {
             return Item.Price * Count;

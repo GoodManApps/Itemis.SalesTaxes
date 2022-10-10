@@ -1,5 +1,6 @@
 ﻿using Itemis.SalesTaxes.Abstraction.TaxesCalculator;
 using Itemis.SalesTaxes.Abstraction.TaxesChecker;
+using Itemis.SalesTaxes.Abstraction.Settings;
 using Itemis.SalesTaxes.Domain.Models;
 using Itemis.SalesTaxes.Implementation.TaxesCalculator.Qualifiers;
 using Itemis.SalesTaxes.Implementation.TaxesChecker;
@@ -23,12 +24,28 @@ namespace Itemis.SalesTaxes.Implementation.TaxesCalculator.Strategies
                 RegexOptions.IgnoreCase |
                 RegexOptions.ExplicitCapture |
                 RegexOptions.CultureInvariant |
-                RegexOptions.Singleline);
+                RegexOptions.Singleline |
+                RegexOptions.Compiled);
 
         /// <summary>
         /// Products qualifier
         /// </summary>
-        readonly ProductsQualifier _productsQualifier = new();
+        private readonly ProductsQualifier _productsQualifier;
+
+        /// <summary>
+        /// Product tax settings for tax checker and product qualifier
+        /// </summary>
+        private readonly IProductTaxSettings _productTaxSettings;
+
+        /// <summary>
+        /// Ctor with product tax settings
+        /// </summary>
+        /// <param name="productTaxSettings">Product tax settings</param>
+        public ProductStrategy(IProductTaxSettings productTaxSettings)
+        {
+            _productTaxSettings = productTaxSettings;
+            _productsQualifier = new ProductsQualifier(_productTaxSettings.CategoriesKeywords);
+        }
 
         // </inheritdoc>
         public IEnumerable<ItemWithTaxes> EvaluateTaxes(IEnumerable<string> items)
@@ -48,7 +65,9 @@ namespace Itemis.SalesTaxes.Implementation.TaxesCalculator.Strategies
                 if (!prod.Category.HasValue)
                     _productsQualifier.Qualify(prod);
 
-                var taxesChecker = new AbstractTaxesChecker<Product>(new ProductsTaxChecker());
+                var taxesChecker = new AbstractTaxesChecker<Product>(
+                    new ProductsTaxChecker(_productTaxSettings.ExemptForTaxes));
+
                 var taxes = taxesChecker.ProcessItem(prod);
 
                 productWithTaxes.SetTaxes(taxes);

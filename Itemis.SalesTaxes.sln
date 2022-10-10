@@ -11,11 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Itemis.SalesTaxes.Domain", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Processing", "Processing", "{1E37E340-21B2-41FA-9752-EB048CA40D71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Itemis.SalesTaxes.Abstraction", "Itemis.SalesTaxes.Abstraction\Itemis.SalesTaxes.Abstraction.csproj", "{949D4812-A61D-48D4-ABBE-41FFF69103A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Itemis.SalesTaxes.Abstraction", "Itemis.SalesTaxes.Abstraction\Itemis.SalesTaxes.Abstraction.csproj", "{949D4812-A61D-48D4-ABBE-41FFF69103A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Itemis.SalesTaxes.Implementation", "Itemis.SalesTaxes.Implementation\Itemis.SalesTaxes.Implementation.csproj", "{6F7A3DBE-FD51-4D7C-84C6-8A5CDC93BE7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Itemis.SalesTaxes.Implementation", "Itemis.SalesTaxes.Implementation\Itemis.SalesTaxes.Implementation.csproj", "{6F7A3DBE-FD51-4D7C-84C6-8A5CDC93BE7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Itemis.SalesTaxes.Processing", "Itemis.SalesTaxes.Processing\Itemis.SalesTaxes.Processing.csproj", "{25D9717A-FCDA-4D48-A74A-C37FACA214C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Itemis.SalesTaxes.Processing", "Itemis.SalesTaxes.Processing\Itemis.SalesTaxes.Processing.csproj", "{25D9717A-FCDA-4D48-A74A-C37FACA214C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

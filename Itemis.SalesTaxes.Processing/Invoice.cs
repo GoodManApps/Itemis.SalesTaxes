@@ -3,21 +3,34 @@ using Itemis.SalesTaxes.Implementation.TaxesCalculator.Strategies;
 using Itemis.SalesTaxes.Implementation.TaxesCalculator;
 using System.Globalization;
 using System.Text;
+using Itemis.SalesTaxes.Abstraction.Settings;
+using Itemis.SalesTaxes.Abstraction.Processing;
 
 namespace Itemis.SalesTaxes.Processing
 {
     /// <summary>
-    /// Invoice for input information
+    /// Invoice realization for basket with any kind items - goods or services
     /// </summary>
     /// <typeparam name="TIn">The type of goods or services that are processed in this invoice.</typeparam>
-    public class Invoice<TIn>
+    public class Invoice<TIn>: IInvoice
     {
         /// <summary>
-        /// Get bill info by input list of goods or services
+        /// Product tax settings for relative types
         /// </summary>
-        /// <param name="items">List of goods or services to get bill</param>
-        /// <param name="formatProvider">Transformation provider for culture-specific data</param>
-        /// <returns>Formatted bill</returns>
+        private readonly IProductTaxSettings _productTaxSettings;
+
+        /// <summary>
+        /// Ctor of invoice with product tax settings
+        /// </summary>
+        /// <param name="productTaxSettings">Product tax settings</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public Invoice(IProductTaxSettings productTaxSettings)
+        {
+            _productTaxSettings = productTaxSettings ?? 
+                throw new ArgumentNullException(nameof(productTaxSettings));
+        }
+    
+        // </inheritdoc>
         public string GetBillInfo(IEnumerable<string> items, CultureInfo? formatProvider = null)
         {
             formatProvider ??= CultureInfo.InvariantCulture;
@@ -46,7 +59,8 @@ namespace Itemis.SalesTaxes.Processing
                 totalAmount += sumPrice + sumTax;
                 totalTaxes += sumTax;
 
-                billResult.AppendLine($"{item.Count} {item.Item.Name}: {(sumPrice + sumTax).ToString("0.00", formatProvider)}");
+                billResult.AppendLine($"{item.Count} {item.Item.Name}: " +
+                    $"{(sumPrice + sumTax).ToString("0.00", formatProvider)}");
             }
 
             billResult.AppendLine($"Sales Taxes: {totalTaxes.ToString("0.00", formatProvider)}");
@@ -55,20 +69,15 @@ namespace Itemis.SalesTaxes.Processing
             return billResult.ToString();
         }
 
-        /// <summary>
-        /// Get a list of goods or services along with taxes
-        /// </summary>
-        /// <param name="items">List of goods or services to get bill</param>
-        /// <returns>A list of goods or services along with taxes</returns>
-        /// <exception cref="ArgumentException">Some type params could not be supported</exception>
-        private IEnumerable<ItemWithTaxes> GetItemsWithTaxes(IEnumerable<string> items)
+        // </inheritdoc>
+        public IEnumerable<ITaxeable> GetItemsWithTaxes(IEnumerable<string> items)
         {
             switch (typeof(TIn).Name)
             {
                 case nameof(Product):
                     {
                         TaxesCalculator<IEnumerable<string>, IEnumerable<ItemWithTaxes>> taxCalculator = new(
-                            new ProductStrategy());
+                            new ProductStrategy(_productTaxSettings));
                         var result = taxCalculator.CalculateTaxes(items);
 
                         return result;
