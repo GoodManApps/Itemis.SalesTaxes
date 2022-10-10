@@ -63,9 +63,7 @@ namespace Itemis.SalesTaxes.Implementation.TaxesCalculator
                 totalTaxSize += tax.TaxSize;
             }
 
-            return (float)Math.Round(
-                Math.Round(totalTaxSize / 100.0f * GetTotalAmount() * 20,
-                    MidpointRounding.AwayFromZero) / 20, 1);
+            return (float)(Math.Ceiling(totalTaxSize / 100.0f * GetTotalAmount() / 0.05) * 0.05);
         }
 
         // </inheritdoc>
