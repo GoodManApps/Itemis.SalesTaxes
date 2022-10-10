@@ -1,0 +1,32 @@
+﻿using Itemis.SalesTaxes.Domain.Models;
+
+namespace Itemis.SalesTaxes.UnitTests.Domain
+{
+    public class ProductTests
+    {
+        [Fact]
+        public void Product_Shouldnt_Change_Param_ReturnTrue()
+        {
+            var name = "Prod 1";
+            var price = 0.35f;
+
+            var product = new Product(name, price);
+
+            Assert.Equal(name, product.Name);
+            Assert.Equal(price, product.Price);
+        }
+
+        [Theory]
+        [InlineData("Just product")]
+        [InlineData("Imported product")]
+        [InlineData("Great imported product")]
+        public void Product_Check_IsImprorted_ReturnFalse(string name)
+        {
+            var price = 0.35f;
+
+            var product = new Product(name, price);
+
+            Assert.False(product.IsImported);
+        }
+    }
+}
