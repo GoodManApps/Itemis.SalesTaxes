@@ -15,20 +15,6 @@ namespace Itemis.SalesTaxes.Implementation.TaxesCalculator.Qualifiers
         private readonly Dictionary<ProductCategory, HashSet<string>> _categoriesKeywords;
 
         /// <summary>
-        /// ctor
-        /// </summary>
-        public ProductsQualifier()
-        {
-            // TODO: Move to tests in the future.
-            _categoriesKeywords = new Dictionary<ProductCategory, HashSet<string>>
-            {
-                { ProductCategory.Food, new HashSet<string>() { "chocolate" } },
-                { ProductCategory.Books, new HashSet<string>() { "book" } },
-                { ProductCategory.Medical, new HashSet<string>() { "pills" } }
-            };
-        }
-
-        /// <summary>
         /// ctor with categories keywords.
         /// </summary>
         /// <param name="categoriesKeywords">Prepared categories keywords.</param>
@@ -40,8 +26,11 @@ namespace Itemis.SalesTaxes.Implementation.TaxesCalculator.Qualifiers
         // </inheritdoc>
         public void Qualify(Product product)
         {
+            // we'll check in lower text to exclude errors related with upper case
+            var productName = product.Name.ToLowerInvariant();
+
             // By the keyword "imported" in the name, set the attribute isImported
-            if (product.Name.Contains("imported"))
+            if (productName.Contains("imported"))
             {
                 product.SetIsImported(true);
             }
@@ -55,7 +44,7 @@ namespace Itemis.SalesTaxes.Implementation.TaxesCalculator.Qualifiers
 
                 foreach (var categoryKey in _categoriesKeywords[key])
                 {
-                    if (product.Name.Contains(categoryKey))
+                    if (productName.Contains(categoryKey))
                     {
                         product.SetCategory(key);
                         break;
