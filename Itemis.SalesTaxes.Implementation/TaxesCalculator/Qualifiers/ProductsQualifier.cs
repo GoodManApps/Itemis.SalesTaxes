@@ -15,20 +15,6 @@ namespace Itemis.SalesTaxes.Implementation.TaxesCalculator.Qualifiers
         private readonly Dictionary<ProductCategory, HashSet<string>> _categoriesKeywords;
 
         /// <summary>
-        /// ctor
-        /// </summary>
-        public ProductsQualifier()
-        {
-            // TODO: Move to tests in the future.
-            _categoriesKeywords = new Dictionary<ProductCategory, HashSet<string>>
-            {
-                { ProductCategory.Food, new HashSet<string>() { "chocolate" } },
-                { ProductCategory.Books, new HashSet<string>() { "book" } },
-                { ProductCategory.Medical, new HashSet<string>() { "pills" } }
-            };
-        }
-
-        /// <summary>
         /// ctor with categories keywords.
         /// </summary>
         /// <param name="categoriesKeywords">Prepared categories keywords.</param>
