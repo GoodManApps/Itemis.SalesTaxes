@@ -4,16 +4,17 @@ namespace Itemis.SalesTaxes.UnitTests.Domain
 {
     public class ProductTests
     {
+        private const float _price = 0.35f;
+
         [Fact]
         public void Product_Shouldnt_Change_Param_ReturnTrue()
         {
             var name = "Prod 1";
-            var price = 0.35f;
 
-            var product = new Product(name, price);
+            var product = new Product(name, _price);
 
             Assert.Equal(name, product.Name);
-            Assert.Equal(price, product.Price);
+            Assert.Equal(_price, product.Price);
         }
 
         [Theory]
@@ -22,9 +23,7 @@ namespace Itemis.SalesTaxes.UnitTests.Domain
         [InlineData("Great imported product")]
         public void Product_Check_IsImprorted_ReturnFalse(string name)
         {
-            var price = 0.35f;
-
-            var product = new Product(name, price);
+            var product = new Product(name, _price);
 
             Assert.False(product.IsImported);
         }
