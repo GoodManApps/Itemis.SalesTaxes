@@ -8,7 +8,7 @@ namespace Itemis.SalesTaxes.Implementation.TaxesChecker
     /// <summary>
     /// Implementing tax checks for products.
     /// </summary>
-    class ProductsTaxChecker : ITaxesChecker<Product>
+    public class ProductsTaxChecker : ITaxesChecker<Product>
     {
         /// <summary>
         /// Categories that are exempt from specific taxes
