@@ -40,8 +40,11 @@ namespace Itemis.SalesTaxes.Implementation.TaxesCalculator.Qualifiers
         // </inheritdoc>
         public void Qualify(Product product)
         {
+            // we'll check in lower text to exclude errors related with upper case
+            var productName = product.Name.ToLowerInvariant();
+
             // By the keyword "imported" in the name, set the attribute isImported
-            if (product.Name.ToLowerInvariant().Contains("imported"))
+            if (productName.Contains("imported"))
             {
                 product.SetIsImported(true);
             }
@@ -55,7 +58,7 @@ namespace Itemis.SalesTaxes.Implementation.TaxesCalculator.Qualifiers
 
                 foreach (var categoryKey in _categoriesKeywords[key])
                 {
-                    if (product.Name.Contains(categoryKey))
+                    if (productName.Contains(categoryKey))
                     {
                         product.SetCategory(key);
                         break;
