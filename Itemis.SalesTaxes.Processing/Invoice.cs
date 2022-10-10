@@ -12,7 +12,7 @@ namespace Itemis.SalesTaxes.Processing
     /// Invoice realization for basket with any kind items - goods or services
     /// </summary>
     /// <typeparam name="TIn">The type of goods or services that are processed in this invoice.</typeparam>
-    public class Invoice<TIn>: IInvoice
+    public class Invoice<TIn> : IInvoice
     {
         /// <summary>
         /// Product tax settings for relative types
@@ -26,13 +26,17 @@ namespace Itemis.SalesTaxes.Processing
         /// <exception cref="ArgumentNullException"></exception>
         public Invoice(IProductTaxSettings productTaxSettings)
         {
-            _productTaxSettings = productTaxSettings ?? 
+            _productTaxSettings = productTaxSettings ??
                 throw new ArgumentNullException(nameof(productTaxSettings));
         }
-    
+
         // </inheritdoc>
         public string GetBillInfo(IEnumerable<string> items, CultureInfo? formatProvider = null)
         {
+            // Check minimal conditions for starting process
+            if (items == null || !items.Any())
+                return string.Empty;
+
             formatProvider ??= CultureInfo.InvariantCulture;
 
             // the count of additional rows in final bill (need to calculate capacity of StringBuilder)
