@@ -1,16 +1,16 @@
 ﻿using Itemis.SalesTaxes.Domain.Enums;
 
-namespace Itemis.SalesTaxes.Settings
+namespace Itemis.SalesTaxes.Abstraction.Settings
 {
     /// <summary>
-    /// Settings for product tax calculation
+    /// Interface of settings for product tax calculation
     /// </summary>
-    public class ProductTaxSettings
+    public interface IProductTaxSettings
     {
         /// <summary>
         /// Categories that are exempt from specific taxes
         /// </summary>
-        public Dictionary<string, List<ProductCategory>> ExemptForTaxes { get; set; }
+        public Dictionary<string, HashSet<ProductCategory>> ExemptForTaxes { get; set; }
 
         /// <summary>
         /// Dictionary of keywords to define the product category

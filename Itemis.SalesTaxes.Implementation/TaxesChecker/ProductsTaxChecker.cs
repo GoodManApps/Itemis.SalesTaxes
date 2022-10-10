@@ -13,7 +13,7 @@ namespace Itemis.SalesTaxes.Implementation.TaxesChecker
         /// <summary>
         /// Categories that are exempt from specific taxes
         /// </summary>
-        private readonly Dictionary<string, List<ProductCategory>> _exemptForTaxes;
+        private readonly Dictionary<string, HashSet<ProductCategory>> _exemptForTaxes;
 
         /// <summary>
         /// сtor
@@ -21,11 +21,11 @@ namespace Itemis.SalesTaxes.Implementation.TaxesChecker
         public ProductsTaxChecker()
         {
             // TODO: Move to tests in the future.
-            _exemptForTaxes = new Dictionary<string, List<ProductCategory>>
+            _exemptForTaxes = new Dictionary<string, HashSet<ProductCategory>>
             {
                 {
                     nameof(CommonTax),
-                    new List<ProductCategory>()
+                    new HashSet<ProductCategory>()
                     {
                         ProductCategory.Food,
                         ProductCategory.Books,
@@ -40,7 +40,7 @@ namespace Itemis.SalesTaxes.Implementation.TaxesChecker
         /// </summary>
         /// <param name="exemptForTaxes">Prepared categories 
         /// collection that are exempt from specific taxes.</param>
-        public ProductsTaxChecker(Dictionary<string, List<ProductCategory>> exemptForTaxes)
+        public ProductsTaxChecker(Dictionary<string, HashSet<ProductCategory>> exemptForTaxes)
         {
             _exemptForTaxes = exemptForTaxes;
         }
