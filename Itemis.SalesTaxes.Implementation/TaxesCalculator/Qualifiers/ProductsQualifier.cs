@@ -41,7 +41,7 @@ namespace Itemis.SalesTaxes.Implementation.TaxesCalculator.Qualifiers
         public void Qualify(Product product)
         {
             // By the keyword "imported" in the name, set the attribute isImported
-            if (product.Name.Contains("imported"))
+            if (product.Name.ToLowerInvariant().Contains("imported"))
             {
                 product.SetIsImported(true);
             }
