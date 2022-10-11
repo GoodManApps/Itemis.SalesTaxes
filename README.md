@@ -9,7 +9,7 @@ In general, I would like to talk about the solution. When solving the problem, I
 For each problem, I applied the following solution:
 1) I solved the problem using the strategy pattern, so that in the future you can easily add a new strategy without affecting the current implementation.
 2) This problem was solved using the bridge pattern so that two independent class hierarchies can be connected.
-3) I solved this problem using the decorators pattern, that is, the invoice acts as a decal for performing calculations with products, displaying the result.
+3) I solved this problem using the facade pattern, that is, the invoice acts as a decal for performing calculations with products, displaying the result.
 
 To start app you can use one of two ways:
 * Download binaries of version 1.0.
@@ -22,7 +22,7 @@ To use the first method:
 4) After that, instructions for working with the program will appear on the screen.
 
 To use the second method:
-1) make a repository form and open the project in the project root.
+1) make a repository fork and open the project in the project root.
 2) Before working, make sure that the device has .NET 6 installed. This can be checked by running the command `dotnet --version`.
 3) If the command is not found, please install SDK. Instructions can be found at https://learn.microsoft.com/en-us/dotnet/core/install/. Here are comprehensive instructions for all popular operating systems.
 4) After installation, repeat step 2. If unsuccessful, return to step 3 and double-check your actions. Otherwise, you can go to step 5.
